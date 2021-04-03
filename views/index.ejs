@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <title>GridFs & Multer</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mx-auto">
+                <h1 class="text-center my-4">
+                    Hello from The Other Side!
+                </h1>
+                <form action="/upload" method="POST" enctype="multipart/form-data">
+                    <div class="mb-2 text-center">
+                        <input type="file" name="file" class="form-control" id="file">
+                        <label for="file" class="mt-1 form-label">
+                            <h3>Choose File</h3>
+                        </label><br>
+                        <button type="submit" class="mt-2 w-50 p-1 btn btn-primary">
+                            <h5>Submit</h5>
+                        </button>
+                    </div>
+                </form><br>
+                <hr>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="col-md-10 row mx-auto">
+            <% if (files) { %>
+                <% files.forEach((file)=> { %>
+                    <div class="col-md-4 card card-body mb-3">
+                        <% if (file.isImage) { %>
+                            <img src="image/<%= file.filename %>" alt="Image">
+                            <% } else { %>
+                                <p>
+                                    <%= file.filename %>
+                                </p>
+                                <% } %>
+                                    <form action="/files/<%= file._id %>?_methods=DELETE" method="post">
+                                        <button class="btn btn-danger btn-block mt-1">
+                                            Delete
+                                        </button>
+                                        <a href="image/<%= file.filename %>" download>Download</a>
+                                    </form>
+                    </div>
+                    <% }) %>
+                        <% } else { %>
+                            <h5>No Files Found</h5>
+                            <% } %>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
